@@ -1,2 +1,28 @@
 Print("Hello World")
 Print("Deposit R Code Here!")
+
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+
+#Splitting data by sex
+train.male = train[train$Sex == "male",]
+train.female = train[train$Sex == "female",]
+m.table = table(train.male$Survived)
+surv.rate.m = m.table[2]/sum(m.table)
+f.table = table(train.female$Survived)
+surv.rate.f = f.table[2]/sum(f.table)
+sex = c("Female", "Male")
+surv.rate.sex = c(surv.rate.f, surv.rate.m)
+df.sex = data.frame(sex, surv.rate.sex)
+colnames(df.sex) = c("Sex", "Survival Rate")
+df.sex
+
+#Table showing survival based on sex
+counts.sex = table(train$Survived, train$Sex)
+barplot(counts.sex, main="Survival by Sex",
+        xlab="Survived", col=c("red","blue"),
+        , beside=TRUE)
+legend("topleft", legend = c("Did Not Survive", "Survived"), col = c("red","blue"), fill=c("red","blue"))
